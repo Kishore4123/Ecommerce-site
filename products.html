@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Catalog</title>
+    <link rel="stylesheet" href="style2.css">
+</head>
+<body>
+
+    <header class="main-header">
+        <h1>Online Store</h1>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar">
+            <div class="search-bar-mobile">
+                <input type="text" placeholder="Search for products...">
+            </div>
+            
+            <h3>Categories</h3>
+            <ul class="categories">
+                <li><a href="#">Electronics</a></li>
+                <li><a href="#">Clothing</a></li>
+                <li><a href="#">Books</a></li>
+                <li><a href="#">Home Goods</a></li>
+            </ul>
+
+            <h3>Filters</h3>
+            <div class="filter-group">
+                <h4>Price</h4>
+                <div class="price-range">
+                    <input type="number" placeholder="Min" min="0">
+                    <span>-</span>
+                    <input type="number" placeholder="Max" min="0">
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <h4>Brand</h4>
+                <label><input type="checkbox"> Brand A</label>
+                <label><input type="checkbox"> Brand B</label>
+                <label><input type="checkbox"> Brand C</label>
+            </div>
+
+            <div class="filter-group">
+                <h4>Availability</h4>
+                <label><input type="checkbox"> In Stock</label>
+            </div>
+        </aside>
+
+        <main class="product-grid">
+            <div class="search-bar-desktop">
+                <input type="text" placeholder="Search for products...">
+            </div>
+            
+            <div class="product-card">
+                <img src="https://m.media-amazon.com/images/I/71657TiFeHL.jpg" alt="Product Image">
+                <h4 class="product-title">iPhone 15</h4>
+                <p class="product-description">The iPhone 15 series was announced on September 12, 2023, with pre-orders starting on September 15, 2023, and the official release date on September 22, 2023. The iPhone 15 and 15 Plus became available alongside the higher-end iPhone 15 Pro and 15 Pro Max.</p>
+                <p class="product-price">₹59999.99</p>
+                <p class="product-stock">In Stock</p>
+                <button class="add-to-cart-btn" type="button">Add to Cart</button>
+                <button class="purchase-btn" type="button">Purchase</button>
+            </div>
+
+            <div class="product-card">
+                <img src="https://m.media-amazon.com/images/I/717Q2swzhBL.jpg" alt="Product Image">
+                <h4 class="product-title">Samsung S24 Ultra</h4>
+                <p class="product-description">Samsung Galaxy S24 Ultra 5G AI Smartphone with Galaxy AI (Titanium Black, 12GB, 256GB Storage), Snapdragon 8 Gen 3, 200 MP Camera with ProVisual Engine and 5000mAh Battery. Beast of a Phone – Samsung Just Nailed It! Picked up the S24 Ultra recently, and honestly... this phone is an absolute beast.</p>
+                <p class="product-price">₹120000.00</p>
+                <p class="product-stock out-of-stock">Out of Stock</p>
+                <button class="add-to-cart-btn" type="button">Add to Cart</button>
+                <button class="purchase-btn" type="button">Purchase</button>
+            </div>
+
+        </main>
+    </div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Get all "Add to Cart" buttons and attach a click event listener
+        const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                alert("Product added to cart!");
+            });
+        });
+
+        // Get all "Purchase" buttons and attach a click event listener
+        const purchaseButtons = document.querySelectorAll('.purchase-btn');
+        purchaseButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                alert("Purchasing product!");
+            });
+        });
+    });
+</script>
+
+</body>
+</html>

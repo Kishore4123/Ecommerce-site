@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="style3.css">
+</head>
+<body>
+    <div class="container">
+        <div class="signup-container" id="signupFormContainer">
+            <form class="signup-form" id="signupForm">
+                <h2>Create an Account</h2>
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit">Send OTP & Register</button>
+                <div class="switch-link">
+                    Already have an account? <a href="/login">Log In</a>
+                </div>
+            </form>
+        </div>
+
+        <div class="otp-container hidden" id="otpFormContainer">
+            <form class="otp-form" id="otpForm">
+                <h2>Verify Your Email</h2>
+                <p>An OTP has been sent to your email. Please enter it below.</p>
+                <div class="input-group">
+                    <label for="otp">OTP</label>
+                    <input type="text" id="otp" name="otp" required>
+                </div>
+                <button type="submit">Verify OTP</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const signupForm = document.getElementById('signupForm');
+        const otpForm = document.getElementById('otpForm');
+        const signupContainer = document.getElementById('signupFormContainer');
+        const otpContainer = document.getElementById('otpFormContainer');
+
+        let pendingUser = {};
+
+        // Handle initial signup form submission
+        signupForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const username = e.target.username.value;
+            const email = e.target.email.value;
+            const password = e.target.password.value;
+
+            // Store user data temporarily
+            pendingUser = { username, email, password };
+
+            try {
+                // Send registration data to the backend
+                const res = await fetch('/api/auth/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(pendingUser)
+                });
+
+                const data = await res.json();
+
+                if (res.ok) {
+                    // If registration is successful, hide signup form and show OTP form
+                    alert('Registration successful. An OTP has been sent to your email.');
+                    signupContainer.classList.add('hidden');
+                    otpContainer.classList.remove('hidden');
+                } else {
+                    alert(`Registration failed: ${data.msg || 'An error occurred.'}`);
+                }
+
+            } catch (error) {
+                console.error('Registration error:', error);
+                alert('An error occurred. Please try again later.');
+            }
+        });
+
+        // Handle OTP verification form submission
+        otpForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const otp = e.target.otp.value;
+
+            try {
+                // Send OTP to the backend for verification
+                const res = await fetch('/api/auth/verify-otp', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: pendingUser.email, otp })
+                });
+
+                const data = await res.json();
+
+                if (res.ok) {
+                    alert('Email verified successfully! You can now log in.');
+                    // Redirect to the login page after successful verification
+                    window.location.href = '/login';
+                } else {
+                    alert(`OTP verification failed: ${data.msg || 'Invalid OTP.'}`);
+                }
+
+            } catch (error) {
+                console.error('OTP verification error:', error);
+                alert('An error occurred during verification. Please try again.');
+            }
+        });
+    </script>
+</body>
+</html>
